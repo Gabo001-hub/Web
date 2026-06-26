@@ -439,9 +439,9 @@
         ];
 
         function createGameCard(game) {
-            var portrait = ' https://cdn.cloudflare.steamstatic.com/steam/apps/ ' + game.appid + '/library_600x900.jpg';
-            var landscape = 'https://cdn.cloudflare.steamstatic.com/steam/apps/ ' + game.appid + '/header.jpg';
-            var steamURL = 'https://store.steampowered.com/app/ ' + game.appid + '/';
+            var portrait = 'https://cdn.cloudflare.steamstatic.com/steam/apps/' + game.appid + '/library_600x900.jpg';
+            var landscape = 'https://cdn.cloudflare.steamstatic.com/steam/apps/' + game.appid + '/header.jpg';
+            var steamURL = 'https://store.steampowered.com/app/' + game.appid + '/';
 
             var storeButtons =
                 (game.official ? '<a href="' + game.official + '" target="_blank" rel="noopener" class="game-link link-official">🌐 Web Oficial</a>' : '') +
