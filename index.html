@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 ZONA GAMER - Los Mejores Juegos para Romperla</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #1e0033 0%, #2d1b4e 50%, #1a0033 100%); color: #fff; overflow-x: hidden; }
+        .hero-header { background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff); padding: 60px 20px; text-align: center; position: relative; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .hero-header::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px); animation: slide 20s linear infinite; }
+        @keyframes slide { 0% { transform: translate(0,0); } 100% { transform: translate(50px,50px); } }
+        .hero-header h1 { font-size: 3.5em; font-weight: 900; text-shadow: 4px 4px 0px rgba(0,0,0,0.3); margin-bottom: 15px; position: relative; z-index: 1; animation: bounce 2s ease infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .hero-header .subtitle { font-size: 1.4em; font-weight: 600; background: rgba(255,255,255,0.2); display: inline-block; padding: 10px 30px; border-radius: 50px; backdrop-filter: blur(10px); position: relative; z-index: 1; }
+        .controls { padding: 30px 20px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
+        .controls input, .controls select { padding: 14px 22px; border-radius: 14px; border: 2px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.08); color: #fff; font-size: 1em; font-family: 'Poppins', sans-serif; backdrop-filter: blur(10px); min-width: 250px; }
+        .controls input::placeholder { color: rgba(255,255,255,0.5); }
+        .controls select option { background: #2d1b4e; color: #fff; }
+        .age-filters { display: flex; justify-content: center; gap: 15px; margin: 20px; flex-wrap: wrap; }
+        .age-badge { padding: 12px 28px; border-radius: 25px; font-weight: 700; cursor: pointer; transition: all 0.3s; border: 3px solid transparent; font-size: 1em; }
+        .age-badge.active { transform: scale(1.08); box-shadow: 0 5px 20px rgba(0,0,0,0.4); }
+        .age-badge.all { background: #06ffa5; color: #000; }
+        .age-badge.e10 { background: #00d9ff; color: #000; }
+        .age-badge.teen { background: #ffbe00; color: #000; }
+        .age-badge:hover { transform: scale(1.1) rotate(3deg); }
+        .games-container { max-width: 1600px; margin: 0 auto; padding: 40px 20px; }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        .game-card { background: linear-gradient(145deg, #2d1b4e, #1a0b2e); border-radius: 20px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 30px rgba(0,0,0,0.4); border: 2px solid rgba(255,255,255,0.1); position: relative; }
+        .game-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transition: left 0.5s; z-index: 2; pointer-events: none; }
+        .game-card:hover::before { left: 100%; }
+        .game-card:hover { transform: translateY(-15px) scale(1.02); box-shadow: 0 20px 50px rgba(131,56,236,0.4); border-color: #8338ec; }
+        .game-cover-container { width: 100%; aspect-ratio: 2/3; background: linear-gradient(135deg, #2d1b4e 0%, #8338ec 50%, #ff006e 100%); position: relative; overflow: hidden; border-bottom: 4px solid #8338ec; }
+        .game-cover { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 0.4s ease; display: block; }
+        .game-card:hover .game-cover { transform: scale(1.05); }
+        .game-cover-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #8338ec 0%, #ff006e 100%); color: white; text-align: center; padding: 25px; }
+        .game-cover-placeholder .emoji { font-size: 4em; margin-bottom: 15px; }
+        .game-cover-placeholder .title { font-size: 1.3em; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .game-info { padding: 22px; }
+        .game-title { font-size: 1.25em; font-weight: 700; margin-bottom: 12px; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); min-height: 2.8em; line-height: 1.4; }
+        .game-meta { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+        .meta-tag { background: rgba(255,255,255,0.15); padding: 5px 12px; border-radius: 12px; font-size: 0.85em; font-weight: 600; }
+        .year { background: #ff006e; }
+        .rating { background: #00d9ff; color: #000; }
+        .developer { background: #8338ec; }
+        .game-description { font-size: 0.95em; line-height: 1.5; color: #ccc; margin-bottom: 14px; min-height: 4em; }
+        .game-links-media { display: flex; gap: 8px; margin-bottom: 8px; }
+        .game-links-stores { display: flex; gap: 6px; flex-wrap: wrap; }
+        .game-link { flex: 1; min-width: 80px; padding: 9px 6px; border-radius: 10px; text-decoration: none; color: #fff; font-weight: 600; text-align: center; transition: all 0.3s; font-size: 0.82em; display: flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; }
+        .game-link:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .link-trailer { background: linear-gradient(135deg, #ff006e, #ff4d9e); }
+        .link-gameplay { background: linear-gradient(135deg, #8338ec, #ff006e); }
+        .link-official { background: linear-gradient(135deg, #0077b6, #00b4d8); }
+        .link-steam { background: linear-gradient(135deg, #1b2838, #2a475e); border: 1px solid #66c0f4; }
+        .link-gog { background: linear-gradient(135deg, #7b2fbf, #5a189a); }
+        .link-xbox { background: linear-gradient(135deg, #107c10, #52b043); }
+        .link-epic { background: linear-gradient(135deg, #2d2d2d, #555); border: 1px solid #aaa; }
+        .no-results { text-align: center; padding: 60px 20px; font-size: 1.3em; opacity: 0.7; grid-column: 1/-1; }
+        .footer { background: rgba(0,0,0,0.4); text-align: center; padding: 40px; margin-top: 50px; font-size: 1.1em; }
+        .emoji-animation { display: inline-block; animation: wiggle 2s ease-in-out infinite; }
+        @keyframes wiggle { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+        @media (max-width: 768px) {
+            .hero-header h1 { font-size: 2.2em; }
+            .hero-header .subtitle { font-size: 1em; }
+            .games-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+            .game-title { font-size: 0.95em; min-height: auto; }
+            .game-description { font-size: 0.8em; min-height: auto; }
+            .controls input, .controls select { min-width: 100%; }
+            .game-link { font-size: 0.75em; padding: 7px 4px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero-header">
+        <h1>🎮 ZONA GAMER 🎮</h1>
+        <p class="subtitle">🔥 34 Juegos Brutales para Explorar y Romperla 🔥</p>
+    </header>
+    <div class="controls">
+        <input id="search" type="text" placeholder="🔍 Buscar juego...">
+        <select id="filter">
+            <option value="">🎯 Todas las edades</option>
+            <option value="E (Todos)">E (Todos)</option>
+            <option value="E10+ (10+)">E10+ (10+)</option>
+            <option value="T (13+)">T (13+)</option>
+            <option value="—">Sin clasificar</option>
+        </select>
+    </div>
+    <div class="age-filters">
+        <span class="age-badge all active" data-filter="">🌟 Todos</span>
+        <span class="age-badge e10" data-filter="E10+ (10+)">🎯 E10+ (10+)</span>
+        <span class="age-badge teen" data-filter="T (13+)">⚡ T (13+)</span>
+    </div>
+    <div class="games-container">
+        <div class="games-grid" id="gamesGrid"></div>
+    </div>
+    <footer class="footer">
+        <p>🎮 ¡Encontrá tu próxima aventura épica! <span class="emoji-animation">🚀</span></p>
+        <p style="margin-top:10px;font-size:0.9em;opacity:0.8;">Hecho con 💜 para gamers argentinos</p>
+    </footer>
+    <script>
+        window.handleImageError = function(img) {
+            if (img.dataset.fallback1) {
+                img.src = img.dataset.fallback1;
+                img.removeAttribute('data-fallback1');
+            } else {
+                img.parentElement.innerHTML = '<div class="game-cover-placeholder"><div class="emoji">🎮</div><div class="title">' + img.alt + '</div></div>';
+            }
+        };
+
+        var games = [
+            {
+                title: "Ori and the Will of the Wisps", year: 2020, esrb: "E (Todos)", dev: "Moon Studios",
+                note: "Metroidvania de exploración con plataformas excelentes, mundo hermoso y progresión muy satisfactoria.",
+                trailer: " https://www.youtube.com/results?search_query=Ori+and+the+Will+of+the+Wisps+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Ori+and+the+Will+of+the+Wisps+gameplay+espa%C3%B1ol+latino",
+                appid: 1057090,
+                official: " https://www.orithegame.com/ ",
+                gog: null,
+                xbox: "https://www.xbox.com/en-US/games/store/ori-and-the-will-of-the-wisps/9N8CD0XZKLP4 ",
+                epic: null
+            },
+            {
+                title: "Marvel's Spider-Man Remastered", year: 2022, esrb: "T (13+)", dev: "Insomniac Games",
+                note: "Acción, mundo abierto y balanceo por Nueva York.",
+                trailer: "https://www.youtube.com/watch?v=I3YphSjLHTI",
+                gameplay: " https://www.youtube.com/watch?v=shGmyCtP-aQ",
+                appid: 1817070,
+                official: " https://www.playstation.com/es-ar/games/marvels-spider-man-remastered/ ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Ratchet & Clank: Rift Apart", year: 2023, esrb: "E10+ (10+)", dev: "Insomniac Games / Nixxes Software",
+                note: "Aventura interdimensional, plataformas, exploración y combate accesible.",
+                trailer: "https://www.youtube.com/results?search_query=Ratchet+and+Clank+Rift+Apart+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Ratchet+and+Clank+Rift+Apart+gameplay+espa%C3%B1ol+latino",
+                appid: 1895880,
+                official: " https://www.playstation.com/es-ar/games/ratchet-and-clank-rift-apart/ ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Psychonauts 2", year: 2021, esrb: "T (13+)", dev: "Double Fine",
+                note: "Plataformas y acción en un mundo de fantasía mental.",
+                trailer: "https://www.youtube.com/results?search_query=Psychonauts+2+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Psychonauts+2+gameplay+espa%C3%B1ol+latino",
+                appid: 607080,
+                official: " https://psychonauts.com/ ",
+                gog: "https://www.gog.com/en/game/psychonauts_2 ",
+                xbox: "https://www.xbox.com/en-US/games/store/psychonauts-2/9nbr2vxt87sj ",
+                epic: null
+            },
+            {
+                title: "Marvel's Spider-Man: Miles Morales", year: 2022, esrb: "T (13+)", dev: "Insomniac Games",
+                note: "Spin-off con nuevo protagonista y habilidades únicas.",
+                trailer: "https://www.youtube.com/watch?v=lnTN93FgbnY",
+                gameplay: " https://www.youtube.com/watch?v=Q3kfF3XNzw8",
+                appid: 1817190,
+                official: " https://www.playstation.com/es-ar/games/marvels-spider-man-miles-morales/ ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Prince of Persia: The Lost Crown", year: 2024, esrb: "E10+ (10+)", dev: "Ubisoft Montpellier",
+                note: "Metroidvania con plataformas precisas, mapa laberíntico y combate fluido.",
+                trailer: "https://www.youtube.com/results?search_query=Prince+of+Persia+The+Lost+Crown+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Prince+of+Persia+The+Lost+Crown+gameplay+espa%C3%B1ol+latino",
+                appid: 2751000,
+                official: " https://www.ubisoft.com/es-ar/game/prince-of-persia/the-lost-crown ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Indiana Jones and the Great Circle", year: 2024, esrb: "T (13+)", dev: "MachineGames",
+                note: "Exploración arqueológica, puzzles y combate. El más cercano a Tomb Raider de la lista.",
+                trailer: "https://www.youtube.com/results?search_query=Indiana+Jones+and+the+Great+Circle+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Indiana+Jones+and+the+Great+Circle+gameplay+espa%C3%B1ol+latino",
+                appid: 2677660,
+                official: " https://indianajones.bethesda.net/en-US ",
+                gog: null,
+                xbox: "https://www.xbox.com/en-US/games/store/indiana-jones-and-the-great-circle/9n8fq28z6qx3 ",
+                epic: null
+            },
+            {
+                title: "Pentiment", year: 2022, esrb: "—", dev: "Obsidian Entertainment",
+                note: "Aventura narrativa histórica y de misterio.",
+                trailer: "https://www.youtube.com/results?search_query=Pentiment+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Pentiment+gameplay+espa%C3%B1ol+latino",
+                appid: 1205520,
+                official: " https://pentiment.obsidian.net/ ",
+                gog: null,
+                xbox: "https://www.xbox.com/en-US/games/store/pentiment/9NX6K9HN4F4K ",
+                epic: null
+            },
+            {
+                title: "Star Wars Jedi: Survivor", year: 2023, esrb: "T (13+)", dev: "Respawn Entertainment",
+                note: "Secuela con más libertad y combate mejorado.",
+                trailer: "https://www.youtube.com/watch?v=C-a4EB2ijGI",
+                gameplay: " https://www.youtube.com/watch?v=bmj3ty-Wt48",
+                appid: 1774580,
+                official: " https://www.ea.com/es-es/games/starwars/jedi-survivor ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Hogwarts Legacy", year: 2023, esrb: "T (13+)", dev: "Avalanche Software",
+                note: "Mundo abierto en Harry Potter con hechizos y exploración.",
+                trailer: "https://www.youtube.com/results?search_query=Hogwarts+Legacy+trailer+espa%C3%B1ol+latino+oficial",
+                gameplay: " https://www.youtube.com/results?search_query=Hogwarts+Legacy+gameplay+espa%C3%B1ol+latino+oficial",
+                appid: 990080,
+                official: " https://www.hogwartslegacy.com/ ",
+                gog: null, xbox: null,
+                epic: "https://store.epicgames.com/en-US/p/hogwarts-legacy "
+            },
+            {
+                title: "Kena: Bridge of Spirits", year: 2021, esrb: "T (13+)", dev: "Ember Lab",
+                note: "Estilo animado, combate y puzzles con espíritus.",
+                trailer: "https://www.youtube.com/results?search_query=Kena+Bridge+of+Spirits+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Kena+Bridge+of+Spirits+gameplay+espa%C3%B1ol+latino",
+                appid: 1954200,
+                official: " https://www.emberlab.com/games/kena-bridge-of-spirits ",
+                gog: "https://www.gog.com/en/game/kena_bridge_of_spirits ",
+                xbox: null,
+                epic: "https://store.epicgames.com/en-US/p/kena-bridge-of-spirits "
+            },
+            {
+                title: "Star Wars Jedi: Fallen Order", year: 2019, esrb: "T (13+)", dev: "Respawn Entertainment",
+                note: "Exploración, plataformas y combate con sable de luz.",
+                trailer: "https://www.youtube.com/watch?v=0GLbwkfhYZk",
+                gameplay: " https://www.youtube.com/watch?v=bmj3ty-Wt48",
+                appid: 1172380,
+                official: " https://www.ea.com/es-es/games/starwars/jedi-fallen-order ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Horizon Forbidden West (Complete Edition)", year: 2024, esrb: "T (13+)", dev: "Guerrilla Games",
+                note: "Secuela con nuevas máquinas y áreas acuáticas.",
+                trailer: "https://www.youtube.com/results?search_query=Horizon+Forbidden+West+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Horizon+Forbidden+West+gameplay+espa%C3%B1ol+latino+oficial",
+                appid: 2420110,
+                official: " https://www.playstation.com/es-ar/games/horizon-forbidden-west/ ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Batman: Arkham Knight", year: 2015, esrb: "T (13+)", dev: "Rocksteady Studios",
+                note: "Combate fluido, sigilo y vehículo Batmobile.",
+                trailer: "https://www.youtube.com/results?search_query=Batman+Arkham+Knight+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Batman+Arkham+Knight+gameplay+espa%C3%B1ol+latino",
+                appid: 208650,
+                official: " https://www.batmanarkhamknight.com/ ",
+                gog: "https://www.gog.com/en/game/batman_arkham_knight ",
+                xbox: null, epic: null
+            },
+            {
+                title: "The Plucky Squire", year: 2024, esrb: "E10+ (10+)", dev: "All Possible Futures",
+                note: "Aventura en un cuento de hadas con mecánicas tipo Zelda.",
+                trailer: "https://www.youtube.com/results?search_query=The+Plucky+Squire+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=The+Plucky+Squire+gameplay+espa%C3%B1ol+latino",
+                appid: 1627570,
+                official: " https://www.thepluckysquire.com/ ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Horizon Zero Dawn (Complete Edition)", year: 2020, esrb: "T (13+)", dev: "Guerrilla Games",
+                note: "Mundo abierto post-apocalíptico cazando máquinas.",
+                trailer: "https://www.youtube.com/watch?v=NckrdIlYu3Q",
+                gameplay: " https://www.youtube.com/results?search_query=Horizon+Zero+Dawn+gameplay+espa%C3%B1ol+latino+oficial",
+                appid: 1151640,
+                official: " https://www.playstation.com/es-ar/games/horizon-zero-dawn/ ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Stray", year: 2022, esrb: "E10+ (10+)", dev: "BlueTwelve Studio",
+                note: "Aventura explorando un mundo cyberpunk como un gato.",
+                trailer: "https://www.youtube.com/results?search_query=Stray+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Stray+gameplay+espa%C3%B1ol+latino",
+                appid: 1332010,
+                official: " https://stray.game/ ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Tunic", year: 2022, esrb: "T (13+)", dev: "Andrew Shouldice",
+                note: "Aventura isométrica tipo Zelda con combate y exploración.",
+                trailer: "https://www.youtube.com/results?search_query=Tunic+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Tunic+gameplay+espa%C3%B1ol+latino",
+                appid: 553420,
+                official: " https://tunicgame.com/ ",
+                gog: "https://www.gog.com/en/game/tunic ",
+                xbox: "https://www.xbox.com/en-US/games/store/tunic/9nlrt31z4rwm ",
+                epic: null
+            },
+            {
+                title: "Marvel's Guardians of the Galaxy", year: 2021, esrb: "T (13+)", dev: "Eidos-Montréal",
+                note: "Aventura narrativa con combates en equipo y decisiones.",
+                trailer: "https://www.youtube.com/watch?v=iROuVYJSOik",
+                gameplay: " https://www.youtube.com/results?search_query=Marvel%27s+Guardians+of+the+Galaxy+gameplay+espa%C3%B1ol+latino+oficial",
+                appid: 1088850,
+                official: " https://guardiansofthegalaxy.game/ ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Okami HD", year: 2017, esrb: "T (13+)", dev: "Capcom",
+                note: "Aventura inspirada en Zelda con exploración, puzzles y arte excepcional.",
+                trailer: "https://www.youtube.com/results?search_query=Okami+HD+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Okami+HD+gameplay+espa%C3%B1ol+latino",
+                appid: 587620,
+                official: " https://www.capcom.com/okami/ ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Death's Door", year: 2021, esrb: "E10+ (10+)", dev: "Acid Nerve",
+                note: "Acción isométrica con exploración, jefes y mundo interconectado. Tono oscuro sin violencia explícita.",
+                trailer: "https://www.youtube.com/results?search_query=Deaths+Door+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Deaths+Door+gameplay+espa%C3%B1ol+latino",
+                appid: 894020,
+                official: " https://playdeathsdoor.com/ ",
+                gog: "https://www.gog.com/en/game/deaths_door ",
+                xbox: null, epic: null
+            },
+            {
+                title: "Sackboy: A Big Adventure", year: 2022, esrb: "E (Todos)", dev: "Sumo Digital",
+                note: "Plataformas 3D cooperativas, muy accesible y con gran diseño de niveles.",
+                trailer: "https://www.youtube.com/results?search_query=Sackboy+A+Big+Adventure+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Sackboy+A+Big+Adventure+gameplay+espa%C3%B1ol+latino",
+                appid: 1599660,
+                official: " https://www.playstation.com/es-ar/games/sackboy-a-big-adventure/ ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Immortals Fenyx Rising", year: 2020, esrb: "T (13+)", dev: "Ubisoft Quebec",
+                note: "Mitología griega, puzzles y combate estilo arcade.",
+                trailer: "https://www.youtube.com/results?search_query=Immortals+Fenyx+Rising+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Immortals+Fenyx+Rising+gameplay+espa%C3%B1ol+latino",
+                appid: 2221920,
+                official: " https://www.ubisoft.com/es-ar/game/immortals-fenyx-rising ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Uncharted: Legacy of Thieves Collection", year: 2022, esrb: "T (13+)", dev: "Naughty Dog",
+                note: "Incluye Uncharted 4 y El legado perdido.",
+                trailer: "https://www.youtube.com/results?search_query=Uncharted+Legacy+of+Thieves+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Uncharted+Legacy+of+Thieves+gameplay+espa%C3%B1ol+latino",
+                appid: 1659420,
+                official: " https://www.playstation.com/es-ar/games/uncharted-legacy-of-thieves-collection/ ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Lost in Random", year: 2021, esrb: "T (13+)", dev: "Zoink Games",
+                note: "Aventura narrativa con estética tipo Tim Burton y combate basado en cartas y dados.",
+                trailer: "https://www.youtube.com/results?search_query=Lost+in+Random+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Lost+in+Random+gameplay+espa%C3%B1ol+latino",
+                appid: 1462570,
+                official: " https://www.ea.com/es-es/games/lost-in-random ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Eastward", year: 2021, esrb: "T (13+)", dev: "Pixpil",
+                note: "Aventura con estilo RPG y pixel art, narrativa profunda.",
+                trailer: "https://www.youtube.com/results?search_query=Eastward+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Eastward+gameplay+espa%C3%B1ol+latino",
+                appid: 977880,
+                official: " https://www.eastwardgame.com/ ",
+                gog: "https://www.gog.com/en/game/eastward ",
+                xbox: null, epic: null
+            },
+            {
+                title: "Tinykin", year: 2022, esrb: "E10+ (10+)", dev: "Splashteam",
+                note: "Exploración, puzzles y coleccionables en escenarios enormes vistos desde una perspectiva diminuta.",
+                trailer: "https://www.youtube.com/results?search_query=Tinykin+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Tinykin+gameplay+espa%C3%B1ol+latino",
+                appid: 1599020,
+                official: " https://www.tinykin.com/ ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "LEGO Horizon Adventures", year: 2024, esrb: "E10+ (10+)", dev: "Guerrilla Games / Studio Gobo",
+                note: "Versión Lego del mundo de Horizon.",
+                trailer: "https://www.youtube.com/results?search_query=LEGO+Horizon+Adventures+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=LEGO+Horizon+Adventures+gameplay+espa%C3%B1ol+latino",
+                appid: 2428810,
+                official: " https://www.legohorizonadventures.com ",
+                gog: null,
+                xbox: null,
+                epic: "https://store.epicgames.com/en-US/p/lego-horizon-adventures "
+            },
+            {
+                title: "Destroy All Humans! 2: Reprobed", year: 2022, esrb: "—", dev: "Black Forest Games",
+                note: "Acción y aventura con humor y aliens.",
+                trailer: "https://www.youtube.com/results?search_query=Destroy+All+Humans+2+Reprobed+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Destroy+All+Humans+2+Reprobed+gameplay+espa%C3%B1ol+latino",
+                appid: 1266700,
+                official: " https://www.destroyallhumansgame.com/ ",
+                gog: "https://www.gog.com/en/game/destroy_all_humans_2_reprobed ",
+                xbox: null, epic: null
+            },
+            {
+                title: "New Super Lucky's Tale", year: 2019, esrb: "E (Todos)", dev: "Playful Studios",
+                note: "Plataformas y exploración estilo clásico, ideal para jugadores jóvenes.",
+                trailer: "https://www.youtube.com/results?search_query=New+Super+Luckys+Tale+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=New+Super+Luckys+Tale+gameplay+espa%C3%B1ol+latino",
+                appid: 1038300,
+                official: " https://www.playfulstudios.com/ ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Yooka-Laylee and the Impossible Lair", year: 2019, esrb: "E (Todos)", dev: "Playtonic Games",
+                note: "Plataformas modernas inspiradas en Donkey Kong Country con exploración ligera.",
+                trailer: "https://www.youtube.com/results?search_query=Yooka-Laylee+and+the+Impossible+Lair+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Yooka-Laylee+and+the+Impossible+Lair+gameplay+espa%C3%B1ol+latino",
+                appid: 846870,
+                official: " https://www.playtonicgames.com/games/yooka-laylee-and-the-impossible-lair/ ",
+                gog: null, xbox: null, epic: null
+            },
+            {
+                title: "Norco", year: 2022, esrb: "—", dev: "Geography of Robots",
+                note: "Aventura narrativa con misterio y pixel art.",
+                trailer: "https://www.youtube.com/results?search_query=Norco+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Norco+gameplay+espa%C3%B1ol+latino",
+                appid: 1221250,
+                official: " https://norcogame.com/ ",
+                gog: "https://www.gog.com/en/game/norco ",
+                xbox: null, epic: null
+            },
+            {
+                title: "Hob", year: 2017, esrb: "E10+ (10+)", dev: "Runic Games",
+                note: "Exploración, puzles ambientales y progresión sin diálogos, muy amigable para todas las edades.",
+                trailer: "https://www.youtube.com/results?search_query=Hob+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Hob+gameplay+espa%C3%B1ol+latino",
+                appid: 404680,
+                official: null,
+                gog: " https://www.gog.com/en/game/hob ",
+                xbox: null, epic: null
+            },
+            {
+                title: "Pseudoregalia", year: 2023, esrb: "T (13+)", dev: "Ritterz",
+                note: "Exploración y plataformas 3D con fuerte énfasis en movilidad y descubrimiento.",
+                trailer: "https://www.youtube.com/results?search_query=Pseudoregalia+trailer+espa%C3%B1ol+latino",
+                gameplay: " https://www.youtube.com/results?search_query=Pseudoregalia+gameplay+espa%C3%B1ol+latino",
+                appid: 2365810,
+                official: null,
+                gog: null, xbox: null, epic: null
+            }
+        ];
+
+        function createGameCard(game) {
+            var portrait = ' https://cdn.cloudflare.steamstatic.com/steam/apps/ ' + game.appid + '/library_600x900.jpg';
+            var landscape = 'https://cdn.cloudflare.steamstatic.com/steam/apps/ ' + game.appid + '/header.jpg';
+            var steamURL = 'https://store.steampowered.com/app/ ' + game.appid + '/';
+
+            var storeButtons =
+                (game.official ? '<a href="' + game.official + '" target="_blank" rel="noopener" class="game-link link-official">🌐 Web Oficial</a>' : '') +
+                '<a href="' + steamURL + '" target="_blank" rel="noopener" class="game-link link-steam">🟦 Steam</a>' +
+                (game.gog    ? '<a href="' + game.gog  + '" target="_blank" rel="noopener" class="game-link link-gog">🟣 GOG</a>' : '') +
+                (game.xbox   ? '<a href="' + game.xbox + '" target="_blank" rel="noopener" class="game-link link-xbox">🟢 Xbox</a>' : '') +
+                (game.epic   ? '<a href="' + game.epic + '" target="_blank" rel="noopener" class="game-link link-epic">⬛ Epic</a>' : '');
+
+            return '<div class="game-card">' +
+                '<div class="game-cover-container">' +
+                '<img src="' + portrait + '" alt="' + game.title + '" class="game-cover" data-fallback1="' + landscape + '" loading="lazy" onerror="handleImageError(this)">' +
+                '</div>' +
+                '<div class="game-info">' +
+                '<h3 class="game-title">' + game.title + '</h3>' +
+                '<div class="game-meta">' +
+                '<span class="meta-tag year">📅 ' + game.year + '</span>' +
+                '<span class="meta-tag rating">🎮 ' + game.esrb + '</span>' +
+                '<span class="meta-tag developer">👾 ' + game.dev + '</span>' +
+                '</div>' +
+                '<p class="game-description">' + game.note + '</p>' +
+                '<div class="game-links-media">' +
+                '<a href="' + game.trailer  + '" target="_blank" rel="noopener" class="game-link link-trailer">🎥 Trailer</a>' +
+                '<a href="' + game.gameplay + '" target="_blank" rel="noopener" class="game-link link-gameplay">🎮 Gameplay</a>' +
+                '</div>' +
+                '<div class="game-links-stores">' + storeButtons + '</div>' +
+                '</div>' +
+                '</div>';
+        }
+
+        function render() {
+            var q = document.getElementById('search').value.toLowerCase();
+            var f = document.getElementById('filter').value;
+            var data = games.filter(function(g) {
+                return g.title.toLowerCase().indexOf(q) !== -1 || g.note.toLowerCase().indexOf(q) !== -1;
+            }).filter(function(g) {
+                return !f || g.esrb === f;
+            });
+            var grid = document.getElementById('gamesGrid');
+            if (data.length === 0) {
+                grid.innerHTML = '<div class="no-results">🔍 No se encontraron juegos con esos filtros.</div>';
+            } else {
+                grid.innerHTML = data.map(function(g) { return createGameCard(g); }).join('');
+            }
+        }
+
+        document.getElementById('search').oninput = render;
+        document.getElementById('filter').onchange = render;
+        document.querySelectorAll('.age-badge').forEach(function(badge) {
+            badge.onclick = function() {
+                document.querySelectorAll('.age-badge').forEach(function(b) { b.classList.remove('active'); });
+                this.classList.add('active');
+                document.getElementById('filter').value = this.dataset.filter;
+                render();
+            };
+        });
+        render();
+    </script>
+</body>
+</html>
